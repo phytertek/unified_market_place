@@ -1,8 +1,8 @@
 {
   "name": "unified_market_place",
   "version": "0.1.0",
-  "description": "A market place for creating fundraising accounts and donating to those fundraising accounts",
-  "main": "index.js",
+  "description":
+    "A market place for creating fundraising accounts and donating to those fundraising accounts",
   "repository": "https://github.com/phytertek/unified_market_place.git",
   "author": "Ryan Lowe <ryan.phytertek@gmail.com>",
   "license": "MIT",

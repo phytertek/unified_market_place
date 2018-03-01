@@ -1,13 +1,17 @@
 {
   "name": "server",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon index.js"
   },
   "dependencies": {
-    "enmapi": "^1.1.12"
+    "bcrypt": "^1.0.3",
+    "enmapi": "^1.1.12",
+    "express-useragent": "^1.0.12",
+    "jwt-simple": "^0.5.1",
+    "object-hash": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.17.1"
