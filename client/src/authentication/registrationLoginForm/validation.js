@@ -6,7 +6,6 @@ const validatorFunctionName = fieldName =>
 
 const fieldValidator = {
   validateEmail: (email = '') => {
-    console.log(email);
     let error;
     if (!!email && !isEmail(email)) {
       error = 'Must be a valid email address (username@domain.com)';
@@ -14,12 +13,11 @@ const fieldValidator = {
     if (!!!email) {
       error = 'Email address is required';
     }
-    console.log(error);
     return !!error ? error : false;
   },
   validatePassword: (password = '', type) => {
     let error;
-    if (type === 'registration' && !!password) {
+    if (type === 'register' && !!password) {
       passwordStrengthTest.config({
         allowPassphrases: true,
         maxLength: 56,
@@ -43,18 +41,16 @@ const fieldValidator = {
 };
 export const validateForm = (form, type) => {
   const errors = {};
-  ['email', 'password'].forEach(fieldName => {
+  Object.keys(form).forEach(fieldName => {
     const error = fieldValidator[validatorFunctionName(fieldName)](
       form[fieldName],
       type
     );
-    if (error) errors[`${fieldName}Error`] = error;
+    if (error) errors[`__${fieldName}Error`] = error;
   });
   return !!Object.keys(errors).length ? errors : false;
 };
-export const validateField = field => {
-  const [keyVal] = Object.entries(field);
-  const [fieldName, fieldValue] = keyVal;
-  console.log(fieldValidator[validatorFunctionName(fieldName)](fieldValue));
-  return fieldValidator[validatorFunctionName(fieldName)](fieldValue);
+export const validateField = (field, type) => {
+  const [fieldName, fieldValue] = Object.entries(field)[0];
+  return fieldValidator[validatorFunctionName(fieldName)](fieldValue, type);
 };

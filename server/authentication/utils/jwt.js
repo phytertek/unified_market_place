@@ -58,7 +58,6 @@ const sourceMatch = (a, b) => {
 
 const existingUserTokenSourceMatch = (user, req) => {
   let match;
-  console.log(user.activeTokens);
   user.activeTokens.forEach(token => {
     const reqSource = useragent.parse(req.headers['user-agent']);
     console.log('req source', reqSource);
@@ -70,21 +69,6 @@ const existingUserTokenSourceMatch = (user, req) => {
   });
   return match || false;
 };
-
-// const compareUserToken = async (user, req) => {
-//   try {
-//     const reqToken = req.token;
-//     const reqSource = useragent.parse(req.headers['user-agent']);
-//     const activeTokens = user.activeTokens;
-//     if (!activeTokens.length) return false;
-//     // const match = activeTokens.find(token => token.token === reqToken);
-//     // if (!match) return false;
-//     // if (!sourceMatch(match.source, reqSource)) return false;
-//     // return true;
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// };
 
 const compareUserToken = async (user, req) => {
   try {

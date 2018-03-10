@@ -19,7 +19,6 @@ module.exports = {
         path: 'activeTokens',
         model: 'Token'
       });
-      console.log('auth route service', user);
       if (!!!user) throwError('No user found');
       const tokenMatch = await compareUserToken(user, req);
       if (tokenMatch !== 'Success') throwError('Not an active token');

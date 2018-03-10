@@ -5,6 +5,12 @@ const { todayPlusNDays } = require('enmapi/common/timeDate');
 module.exports = {
   User: {
     Schema: {
+      firstName: {
+        type: String
+      },
+      lastName: {
+        type: String
+      },
       email: {
         type: String,
         required: true,
@@ -25,6 +31,12 @@ module.exports = {
       User.pre('save', async function handlePreSaveHooks(next) {
         try {
           const user = this;
+
+          // If email is modified
+          if (user.isModified('email')) {
+            // make sure email is all lower case
+            user.email = user.email.toLowerCase();
+          }
 
           // If password is modified
           if (user.isModified('password')) {
