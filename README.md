@@ -16,19 +16,14 @@
 
 ```
 |- User
-  |- email (required) - UA
-  |- password (required, hashed) -UA
-  |- firstName - UA
-  |- lastName - UA
-  |- address - UA
-    |- street
-    |- city
-    |- state
-    |- postalCode
-    |- country
-  |- mobilePhone - UA
-  |- fundraiserId (stripe)
-  |- donorId (stripe)
+  |- email (required)
+  |- password (required, hashed)
+  |- firstName
+  |- lastName
+  |- isFundraiser
+  |- fundraiserAcct (stripe)
+  |- isDonor
+  |- donorAcct (stripe)
   |- fundraisers (list - ref: Fundraisers)
   |- donations (list - ref: Donations)
 
@@ -36,17 +31,14 @@
   |- owner (ref: User)
   |- title (required)
   |- description
-  |- images (list),
   |- goal
-  |- collected
   |- donations (list - ref: Donations)
 
 |- Donations
-  |- donor (ref: User - required)
-  |- fundraiser (ref: Fundraiser - required)
+  |- donor (ref: User)
   |- amount (required)
-  |- currency (required)
-  |- donationId (stripe)
+  |- fundraiser (ref: Fundraiser)
+  |- fundraiserOwner (ref: User)
 ```
 
 ### Routes
@@ -57,16 +49,11 @@
     |- /register - POST - { email, password } => { token }
     |- /login - POST - { email, password } => { token }
     |- /logout - GET - AUTHENTICATED => { true }
-    |- /verify - GET - AUTHENTICATED => { true }
-  |- /user AUTHENTICATED
-    |- /update - PUT - { UA fields } => { updatedUser }
-    |- /:id - GET - OWNER => { user, user.fundraisers, user.donations }
+    |- /validate - GET - AUTHENTICATED => { true }
   |- /fundraiser
     |- /all - GET => [ fundraisers ]
-    |- /:id - GET => { fundraiser, fundraiser.donations}
-    |- /create - POST - AUTHENTICATED { owner, title, description, goal, images } => { newFundraiser }
-    |- /update - PUT - AUTHENTICATED / OWNER { All fields } => { updatedFundraiser }
-    |- /delete - DELETE - AUTHENTICATED / OWNER => { true }
+    |- /create - POST - AUTHENTICATED { title, description, goal } => { newFundraiser }
+    |- /create-acct - POST - AUTHENTICATED { code (from stripe OAuth flow) } => { success }
   |- /donations
-    |-/create - POST - AUTHENTICATED { owner, fundraiser, amount, currency } => { newDonation }
+    |-/create - POST - AUTHENTICATED { token (from stripe Elements), donations } => { isDonor, donationsTotal, success }
 ```

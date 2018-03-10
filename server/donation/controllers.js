@@ -50,7 +50,7 @@ module.exports = {
       const COMMISION_PERCENTAGE = 5;
       const commission = amount => amount * COMMISION_PERCENTAGE;
 
-      // Trigger transfers via webhook on charge transaction complete or at set payout intervals -- Using immediate transfers here for demo purposes
+      // In Production, trigger transfers via webhook on charge transaction complete or at set payout intervals -- Using immediate transfers here for demo purposes
       const transfer_group = `${user._id}:${Date.now()}`;
       const charge = await stripe.charges.create({
         amount: donationsTotal,
