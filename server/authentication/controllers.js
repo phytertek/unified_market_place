@@ -10,9 +10,6 @@ const {
 } = require('enmapi/common/utils');
 
 module.exports = {
-  test: async (req, res) => {
-    res.json('made it through');
-  },
   authGetLogoutUser: async (req, res) => {
     try {
       const user = req.unsafeUser;
@@ -37,7 +34,6 @@ module.exports = {
       const passwordMatch = await user.checkPassword(password);
       if (!passwordMatch)
         throwError('Not a valid email / password combination');
-      // check for activeTokens matching source -> return matched || create new
       let token;
       const existingTokenForSource = existingUserTokenSourceMatch(user, req);
       if (existingTokenForSource) {
@@ -47,19 +43,15 @@ module.exports = {
         user.activeTokens.push(token._id);
         await user.save();
       }
-      res.json({ token: token.token });
-    } catch (error) {
-      sendUserError(error, res);
-    }
-  },
-  authPostUpdateUser: async (req, res) => {
-    try {
-      const { email, password } = req.body;
-      const updatedUser = await updateIfExists(req.unsafeUser, {
-        email,
-        password
-      }).save();
-      res.json(updatedUser);
+      res.json({
+        token: token.token,
+        _id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        isDonor: user.isDonor,
+        isFundraiser: user.isFundraiser
+      });
     } catch (error) {
       sendUserError(error, res);
     }
@@ -72,15 +64,11 @@ module.exports = {
       const token = await new Token(await generateUserToken(user, req)).save();
       user.activeTokens.push(token._id);
       await user.save();
-      res.json({ token: token.token });
+      res.json({ token: token.token, email });
     } catch (error) {
       sendUserError(error, res);
     }
-  }
-  // funcName: async (req, res) => {
-  //   try {
-  //   } catch (error) {
-  //     sendUserError(error, res)
-  //   }
-  // },
+  },
+  authGetValidateToken: async (req, res) =>
+    res.json({ email: req.safeUser.email })
 };

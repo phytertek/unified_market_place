@@ -4,11 +4,10 @@ module.exports = {
   '/auth': {
     get: {
       '/logout': [authorizeRoute, controller.authGetLogoutUser],
-      '/test': [authorizeRoute, controller.test]
+      '/validate': [authorizeRoute, controller.authGetValidateToken]
     },
     post: {
       '/login': controller.authPostLoginUser,
-      '/update': [authorizeRoute, controller.authPostUpdateUser],
       '/register': controller.authPostRegisterUser
     }
   }
