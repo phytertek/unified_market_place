@@ -10,14 +10,19 @@ class FundraiserForm extends Component {
     __titleError: null,
     description: '',
     __descriptionError: null,
-    goal: '',
-    __goalError: null
+    goal: 0,
+    __goalError: null,
+    __focused: false
   };
-  changeHandler = e => {
+  handleChange = e => {
     const { name, value } = e.target;
     this.setState(() => ({ [name]: value }));
   };
-  submitHandler = e => {
+  handleGoalChange = e => {
+    const { value } = e.target;
+    this.setState(() => ({ goal: value }));
+  };
+  handleSubmit = e => {
     e.preventDefault();
     const fundraiser = {
       title: this.state.title,

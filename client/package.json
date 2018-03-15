@@ -12,6 +12,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-number-format": "^3.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
@@ -22,8 +23,7 @@
     "validator": "^9.4.1"
   },
   "scripts": {
-    "push:heroku":
-      "git add . && git commit -m 'push to heroku' && git push heroku master && heroku open",
+    "push:heroku": "git add . && git commit -m 'push to heroku' && git push heroku master && heroku open",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

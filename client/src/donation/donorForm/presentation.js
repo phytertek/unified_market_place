@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography';
 import { LinearProgress } from 'material-ui/Progress';
 import { injectStripe } from 'react-stripe-elements';
 import CardForm from '../../stripe/cardElement';
-// import PaymentButton from '../../stripe/paymentRequestElement';
+import NumberFormat from 'react-number-format';
 
 class CreateDonorFormPresentation extends Component {
   constructor(props) {
@@ -34,14 +34,22 @@ class CreateDonorFormPresentation extends Component {
       ev.complete('success');
     });
 
-    const prbUpdateKey = Math.random();
     this.state = {
       showPaymentRequestButton: false,
       tokenRecieved: false,
       paymentRequest,
-      paymentReqChosen: false,
-      prbUpdateKey
+      paymentReqChosen: false
     };
+  }
+  componentWillReceiveProps(next) {
+    if (this.props.pendingTotal !== next.pendingTotal) {
+      this.state.paymentRequest.update({
+        total: {
+          label: 'Donation total',
+          amount: next.pendingTotal * 100
+        }
+      });
+    }
   }
   selectPaymentRequest = () =>
     this.setState(() => ({ paymentReqChosen: true }));
@@ -138,7 +146,18 @@ class CreateDonorFormPresentation extends Component {
                 style={{ width: '100%', padding: 20 }}
               >
                 <Typography variant="title">
-                  Donate{pendingTotal && ` $${pendingTotal}`}
+                  Donate{' '}
+                  {pendingTotal && (
+                    <NumberFormat
+                      value={pendingTotal}
+                      isNumericString={true}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                      thousandSeparator
+                      displayType="text"
+                      prefix="$"
+                    />
+                  )}
                 </Typography>
               </Button>
             </div>

@@ -2,19 +2,21 @@ import React, { Component } from 'react';
 import DonationCardPresentation from './presentation';
 
 class DonationCard extends Component {
-  state = { editAmount: 0, editMode: false };
+  state = { editAmount: '', editMode: false };
   componentDidMount() {
     this.setState(() => ({ editAmount: this.props.amount }));
   }
   componentWillReceiveProps(next) {
-    if (this.props.amount !== next.amount)
-      this.setState(() => ({ editAmount: next.amount }));
-    if (!this.props.inCheckout && next.inCheckout)
-      this.setState(() => ({ editMode: false }));
+    const newState = {};
+    if (this.props.amount !== next.amount) newState.editAmount = next.amount;
+    if (!this.props.inCheckout && next.inCheckout) newState.editMode = false;
+    this.setState(() => newState);
   }
-
   handleChange = e => {
-    this.setState({ editAmount: e.target.value });
+    const { value } = e.target;
+    this.setState(() => ({
+      editAmount: value
+    }));
   };
   handleEditMode = () => this.setState(() => ({ editMode: true }));
   submitEdit = index => {

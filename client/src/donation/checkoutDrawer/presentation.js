@@ -5,6 +5,8 @@ import Typography from 'material-ui/Typography';
 
 import DonationCard from '../donationCard/container';
 import DonorForm from '../donorForm/container';
+import DisplayAmount from '../../common/displayAmount';
+import NumberFormat from 'react-number-format';
 
 const CheckoutDrawerPresentation = props => {
   const {
@@ -32,10 +34,18 @@ const CheckoutDrawerPresentation = props => {
           onClick={handleStartCheckout}
         >
           <Typography variant="title">
-            {`Donate $${pendingDonations.reduce(
-              (t, d) => t + Number(d.amount),
-              0
-            )}`}
+            Donate $
+            <NumberFormat
+              value={pendingDonations.reduce(
+                (returnTotal, d) => returnTotal + Number(d.amount),
+                0
+              )}
+              thousandSeparator
+              displayType="text"
+              decimalScale={2}
+              fixedDecimalScale={true}
+            />
+            {' now'}
           </Typography>
         </Button>
       ) : null}

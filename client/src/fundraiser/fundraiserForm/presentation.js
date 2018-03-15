@@ -6,6 +6,7 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
+import AmountField from '../../common/amountField';
 
 const style = theme => ({
   root: {
@@ -18,18 +19,20 @@ const style = theme => ({
 });
 const FundraiserFormPresentation = ({
   classes,
-  changeHandler,
-  submitHandler,
+  handleChange,
+  handleSubmit,
+  handleGoalChange,
   title,
   __titleError,
   description,
   __descriptionError,
   goal,
-  __goalError
+  __goalError,
+  __focused
 }) => {
   return (
     <div className={classes.root}>
-      <form className={classes.form} onSubmit={submitHandler}>
+      <form className={classes.form} onSubmit={handleSubmit}>
         <Grid container direction="column">
           <Grid item>
             <TextField
@@ -38,7 +41,7 @@ const FundraiserFormPresentation = ({
               label="Title"
               error={!!__titleError}
               helperText={__titleError}
-              onChange={changeHandler}
+              onChange={handleChange}
               fullWidth
             />
           </Grid>
@@ -49,7 +52,7 @@ const FundraiserFormPresentation = ({
               label="Description"
               error={!!__descriptionError}
               helperText={__descriptionError}
-              onChange={changeHandler}
+              onChange={handleChange}
               fullWidth
               multiline
             />
@@ -59,13 +62,10 @@ const FundraiserFormPresentation = ({
               <InputLabel htmlFor="goal">Goal</InputLabel>
               <Input
                 id="goal"
-                type="number"
                 value={goal}
                 name="goal"
-                onChange={changeHandler}
-                startAdornment={
-                  goal && <InputAdornment position="start">$</InputAdornment>
-                }
+                onChange={handleGoalChange}
+                inputComponent={AmountField}
               />
             </FormControl>
           </Grid>
@@ -75,7 +75,7 @@ const FundraiserFormPresentation = ({
         style={{ width: '100%', padding: 20 }}
         variant="raised"
         color="primary"
-        onClick={submitHandler}
+        onClick={handleSubmit}
       >
         <Typography variant="title">Create Fundraiser</Typography>
       </Button>

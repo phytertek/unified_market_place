@@ -1,7 +1,7 @@
 const jwt = require('jwt-simple');
 const hash = require('object-hash');
 const useragent = require('express-useragent');
-const JWT_SECRET = process.env.JWT_SECRET || 'Super Secret JWT Shit';
+const JWT_SECRET = process.env.JWT_SECRET || 'Super Secret JWT SecretS';
 
 const encode = async ({ _id, email }) => {
   try {
@@ -60,9 +60,6 @@ const existingUserTokenSourceMatch = (user, req) => {
   let match;
   user.activeTokens.forEach(token => {
     const reqSource = useragent.parse(req.headers['user-agent']);
-    console.log('req source', reqSource);
-    console.log('token source', token.source);
-    console.log(sourceMatch(token.source, reqSource));
     if (sourceMatch(token.source, reqSource)) {
       match = token;
     }

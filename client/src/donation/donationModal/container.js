@@ -6,8 +6,10 @@ import { closeDonationModal, addDonation } from '../store';
 class CreateDonationModal extends Component {
   state = { amount: 10 };
   handleChange = e => {
-    const { name, value } = e.target;
-    this.setState(() => ({ [name]: value }));
+    const { value } = e.target;
+    this.setState(() => ({
+      amount: value
+    }));
   };
   handleClose = () => {
     this.props.closeDonationModal();

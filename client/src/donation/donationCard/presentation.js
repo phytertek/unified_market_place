@@ -3,8 +3,10 @@ import { withStyles } from 'material-ui/styles';
 import Card from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
+import AmountField from '../../common/amountField';
+import NumberFormat from 'react-number-format';
 const styles = theme => ({
   card: {
     width: 400,
@@ -43,12 +45,11 @@ const SimpleCard = ({
           <InputLabel htmlFor="amount">Amount</InputLabel>
           <Input
             id="amount"
-            type="number"
             value={editAmount}
-            name="editAmount"
+            name="amount"
+            inputComponent={AmountField}
             onChange={handleChange}
             style={{ fontSize: '30px' }}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
           />
         </FormControl>
       ) : (
@@ -57,30 +58,33 @@ const SimpleCard = ({
           component="h2"
           style={{ textAlign: 'center', width: '100%S' }}
         >
-          ${amount} to {fundraiser.title}
+          <NumberFormat
+            value={amount}
+            isNumericString={true}
+            decimalScale={2}
+            fixedDecimalScale={true}
+            thousandSeparator
+            displayType="text"
+            prefix="$"
+          />
+          {` to ${fundraiser.title}`}
         </Typography>
       )}
     </div>
-    {!inCheckout && (
-      <div>
-        {editMode ? (
-          <Button size="small" onClick={submitEdit} style={{ width: '50%' }}>
-            Update
-          </Button>
-        ) : (
-          <Button
-            size="small"
-            onClick={handleEditMode}
-            style={{ width: '50%' }}
-          >
-            Edit
-          </Button>
-        )}
-        <Button size="small" onClick={handleRemove} style={{ width: '50%' }}>
-          Remove
+    <div>
+      {editMode ? (
+        <Button size="small" onClick={submitEdit} style={{ width: '50%' }}>
+          Update
         </Button>
-      </div>
-    )}
+      ) : (
+        <Button size="small" onClick={handleEditMode} style={{ width: '50%' }}>
+          Edit
+        </Button>
+      )}
+      <Button size="small" onClick={handleRemove} style={{ width: '50%' }}>
+        Remove
+      </Button>
+    </div>
   </Card>
 );
 
