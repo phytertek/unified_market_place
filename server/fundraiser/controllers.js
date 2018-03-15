@@ -2,7 +2,6 @@ const { User, Fundraiser } = require('enmapi/database');
 const { sendUserError } = require('enmapi/common/errors');
 const { requireFields } = require('enmapi/common/validation');
 const SSK = process.env.SSK;
-const SCID = process.env.SCID;
 const stripe = require('stripe')(SSK);
 const axios = require('axios');
 

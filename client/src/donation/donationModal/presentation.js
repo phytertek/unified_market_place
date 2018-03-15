@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Dialog, {
   DialogContent,
@@ -10,6 +10,7 @@ import Dialog, {
   DialogTitle,
   withMobileDialog
 } from 'material-ui/Dialog';
+import AmountField from '../../common/amountField';
 
 const styles = theme => ({
   root: {
@@ -51,15 +52,12 @@ const CreateDonationModalPresentation = ({
         <FormControl fullWidth className={classes.formControl}>
           <InputLabel htmlFor="amount">Amount</InputLabel>
           <Input
-            id="adornment-amount"
-            type="number"
+            id="amount"
             value={amount}
             name="amount"
+            inputComponent={AmountField}
             onChange={handleChange}
-            style={{
-              fontSize: '50px'
-            }}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            style={{ fontSize: '50px' }}
           />
         </FormControl>
       </DialogContent>

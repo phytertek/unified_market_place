@@ -64,7 +64,7 @@ export default (state = initState, { type, payload }) => {
         ...state,
         checkoutDrawerOpen: false,
         checkoutSuccessModalOpen: true,
-        checkoutSuccessTotal: payload.data.donationsTotal / 100,
+        checkoutSuccessTotal: payload.data.donationsTotal,
         pendingDonations: []
       };
     case SUBMITTING_START:

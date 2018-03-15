@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import Typography from 'material-ui/Typography';
+import NumberFormat from 'react-number-format';
 
 import { closeCheckoutSuccessModal } from './store';
 
@@ -19,7 +20,19 @@ const CheckoutSuccessModal = ({
       >
         Thanks!
       </Typography>
-      <DialogTitle>Donation of ${checkoutSuccessTotal} successful!</DialogTitle>
+      <DialogTitle>
+        {'Donation of '}
+        <NumberFormat
+          value={checkoutSuccessTotal}
+          isNumericString={true}
+          decimalScale={2}
+          fixedDecimalScale={true}
+          thousandSeparator
+          displayType="text"
+          prefix="$"
+        />
+        {' successful!'}
+      </DialogTitle>
     </Dialog>
   );
 };

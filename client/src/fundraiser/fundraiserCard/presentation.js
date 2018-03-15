@@ -5,6 +5,7 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import RedeemIcon from 'material-ui-icons/Redeem';
+import NumberFormat from 'react-number-format';
 const styles = theme => ({
   root: { maxWidth: 1200 },
   avatar: {
@@ -37,7 +38,16 @@ const FundraiserCardPresentation = ({
         </IconButton>
       }
       title={title}
-      subheader={`Goal: $${goal}`}
+      subheader={
+        <NumberFormat
+          value={goal}
+          decimalScale={0}
+          fixedDecimalScale={true}
+          thousandSeparator
+          displayType="text"
+          prefix="$"
+        />
+      }
     />
     <CardContent>
       <Typography component="p">{description}</Typography>
